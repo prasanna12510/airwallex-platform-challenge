@@ -27,3 +27,15 @@ override.tf.json
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 # example: *tfplan*
+
+
+common-local.yaml
+vars-local.yaml
+generated-*
+.terraformrc-local
+# TODO: allow .terraform.lock.hcl for more strict version control
+.terraform.lock.hcl
+makefile
+.terraform
+version.tf
+versions.tf

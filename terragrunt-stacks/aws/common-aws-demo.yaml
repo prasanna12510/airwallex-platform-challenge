@@ -1,0 +1,2 @@
+region: ap-southeast-1
+aws_assume_role: arn:aws-cn:iam::758687442113:role/terraform-operator

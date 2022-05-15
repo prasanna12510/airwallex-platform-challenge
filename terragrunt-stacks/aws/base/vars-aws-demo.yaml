@@ -1,0 +1,31 @@
+aws-base:
+  vpc_cidr: "10.0.0.0/16"
+  az_count: 2
+  eks_cluster_enabled_log_types:
+    - api
+    - audit
+    - authenticator
+    - controllerManager
+    - scheduler
+  eks_node_groups:
+    default:
+      max_capacity: 3
+      min_capacity: 1
+      disk_size: 10
+      instance_types: ["t2.micro"] # No m5a and m5ad instance types in AWS China
+      capacity_type: "SPOT"
+      warm_node_count: 0
+  eks_worker_groups_launch_template:
+    - name: demo
+      root_volume_size: 20
+      asg_min_size: 0
+      asg_max_size: 10
+      enable_monitoring: false
+      protect_from_scale_in: true
+      capacity_rebalance: true
+      override_instance_types: ["t2.micro"]
+      on_demand_base_capacity: 1
+      # unit is percentage
+      on_demand_percentage_above_base_capacity: 100
+      tags: []
+      warm_node_count: 0
