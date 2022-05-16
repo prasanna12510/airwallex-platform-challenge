@@ -1,3 +1,9 @@
+variable "service_name" {
+  type        = string
+  description = "name of service for deploying via skaffold"
+  default     = ""
+}
+
 variable "skaffold_arg" {
   type        = string
   description = "extra argument to pass to skaffold CLI"

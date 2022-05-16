@@ -10,6 +10,21 @@ generate "tf-version-requirement" {
   contents  = file("${get_parent_terragrunt_dir()}/tf-version-requirement.hcl")
 }
 
+
+remote_state {
+  backend  = "s3"
+  config = {
+    bucket = local.vars.tf_state.bucket
+    key = "aws-demo/${local.vars.common.name}/base/${local.state_file}"
+    region= local.vars.tf_state.region
+    role_arn = "${local.vars.aws_assume_role}"
+  }
+  generate = {
+    path = "generate-backend-remote.tf"
+    if_exists = "overwrite_terragrunt"
+  }
+}
+
 generate "aws-provider" {
   path      = "generated-aws-provider.tf"
   if_exists = "overwrite_terragrunt"
@@ -18,6 +33,33 @@ generate "aws-provider" {
     region = "${local.vars.region}"
     assume_role {
       role_arn = "${local.vars.aws_assume_role}"
+    }
+  }
+  EOT
+}
+
+generate "kubernetes-provider" {
+  path      = "generated-kubernetes-provider.tf"
+  if_exists = "overwrite_terragrunt"
+  contents  = <<-EOT
+  provider "kubernetes" {
+    experiments {
+      manifest_resource = true
+    }
+    config_path = "~/.kube/config"
+    config_context = "${local.vars.kubecontext}"
+  }
+  EOT
+}
+
+generate "helm-provider" {
+  path = "generated-helm-provider.tf"
+  if_exists = "overwrite_terragrunt"
+  contents = <<-EOT
+  provider "helm" {
+    kubernetes {
+        config_path = "~/.kube/config"
+        config_context = "${local.vars.kubecontext}"
     }
   }
   EOT

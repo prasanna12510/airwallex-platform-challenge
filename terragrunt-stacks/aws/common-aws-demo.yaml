@@ -1,2 +1,9 @@
 region: ap-southeast-1
-aws_assume_role: arn:aws-cn:iam::758687442113:role/terraform-operator
+aws_assume_role: arn:aws:iam::176609793379:role/terraform-operator
+common:
+  name: aws-demo
+  tags:
+    environment: aws-demo
+tf_state:
+  bucket: aws-demo
+  region: ap-southeast-1
