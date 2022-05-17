@@ -10,6 +10,7 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
+## set the nginx url as env variable 
 env:
   NGINX_URL: ac16361bc2d8f4361a425931a8b828d3-1366546228.ap-southeast-1.elb.amazonaws.com #internal k8s domain name
 

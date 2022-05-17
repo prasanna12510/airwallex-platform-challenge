@@ -5,9 +5,7 @@ on:
     tags:
       - words-counter-api-*
     paths:
-      - "service/words-counter-service/**"
-      - "service/helm-chart/**"
-      - "service/deploy/**"
+      - "service/words-counter/**"
 
 jobs:
   words-counter-api-image-build:
