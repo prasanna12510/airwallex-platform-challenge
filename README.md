@@ -23,7 +23,7 @@ terragrunt destroy (to destroy infrastructure stack)
 ![Alt text](https://github.com/prasanna12510/airwallex-platform-challenge/blob/main/docs/img/nginx-webserver.png?raw=true "AWSArchitecture")
 
 
-##Service
+## Service
 
 1. Access the k8s cluster
 ```shell
