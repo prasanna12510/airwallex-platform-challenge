@@ -38,7 +38,6 @@ skaffold deploy -t $IMAGE_TAG
 3. API Output
 ``` shell
 kubectl get service -n nginx-ingress
-
 ##retrieve the LB external URL to access the service API endpoint
 ```
 ![Alt text](https://github.com/prasanna12510/airwallex-platform-challenge/blob/main/docs/img/word-frequency.png?raw=true "AWSArchitecture")
