@@ -1,0 +1,39 @@
+name: words-counter-api-code-deploy
+on:
+  push:
+    branches: '**'
+    tags:
+      - words-counter-api-*
+    paths:
+      - "service/words-counter-service/**"
+      - "service/helm-chart/**"
+
+jobs:
+  words-counter-api-image-build:
+    name: Publish - GitHub Container Registry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login docker
+        run : |
+          docker login ghcr.io --username ${DOCKER_USERNAME} -p ${DOCKER_TOKEN} 2>/dev/null
+        env :
+          DOCKER_TOKEN: ${{ secrets.REPOSITORY_ACCESS_TOKEN }}
+          DOCKER_USERNAME: ${{ secrets.REPOSITORY_ACCESS_USER }}
+      - name: Build docker image
+        run : |
+          export GITHUB_SHA_SHORT=`sed -e 's/^"//' -e 's/"$//' <<<"$MASTER_COMMIT_ID" | cut -c1-7`
+          echo "APP_TAG=$(echo $GITHUB_SHA_SHORT)" >> $GITHUB_ENV
+          docker build -t ghcr.io/${DOCKER_USERNAME}/${DOCKER_REPO}:${GITHUB_SHA_SHORT} .
+        working-directory: service/words-counter/words-counter-service
+        env:
+          MASTER_COMMIT_ID: ${{ toJson(github.sha) }}
+          DOCKER_USERNAME: ${{ secrets.REPOSITORY_ACCESS_USER }}
+          DOCKER_REPO: words-counter-api
+
+      - name: Push docker image to github container Registry
+        run : |
+          docker push ghcr.io/$DOCKER_USERNAME/$DOCKER_REPO:$APP_TAG
+        env:
+          DOCKER_USERNAME: ${{ secrets.REPOSITORY_ACCESS_USER }}
+          DOCKER_REPO: words-counter-api

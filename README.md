@@ -27,7 +27,7 @@ terragrunt destroy (to destroy infrastructure stack)
 
 1. Access the k8s cluster
 ```shell
-aws eks --region ap-southeast-1 update-kubeconfig --name aws-demo
+aws eks update-kubeconfig --name aws-demo --region ap-southeast-1 --role-arn arn:aws:iam::176609793379:role/terraform-operator
 ```
 2. deploy service using skaffold
 ```shell
