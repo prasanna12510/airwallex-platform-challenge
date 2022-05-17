@@ -38,33 +38,6 @@ generate "aws-provider" {
   EOT
 }
 
-generate "kubernetes-provider" {
-  path      = "generated-kubernetes-provider.tf"
-  if_exists = "overwrite_terragrunt"
-  contents  = <<-EOT
-  provider "kubernetes" {
-    experiments {
-      manifest_resource = true
-    }
-    config_path = "~/.kube/config"
-    config_context = "${local.vars.kubecontext}"
-  }
-  EOT
-}
-
-generate "helm-provider" {
-  path = "generated-helm-provider.tf"
-  if_exists = "overwrite_terragrunt"
-  contents = <<-EOT
-  provider "helm" {
-    kubernetes {
-        config_path = "~/.kube/config"
-        config_context = "${local.vars.kubecontext}"
-    }
-  }
-  EOT
-}
-
 inputs = lookup(local.vars, "common", {})
 
 generate "vars" {

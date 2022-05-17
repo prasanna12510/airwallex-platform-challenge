@@ -1,0 +1,21 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+build:
+  artifacts:
+  - image: ghcr.io/prasanna12510/words-counter-api
+deploy:
+  helm:
+    flags:
+      global:
+        - --debug
+    releases:
+    - name: words-counter-api
+      chartPath: ../helm-chart/words-counter-api
+      wait: true
+      artifactOverrides:
+        image: ghcr.io/prasanna12510/words-counter-api
+      imageStrategy:
+          helm:
+            explicitRegistry: false
+      packaged:
+        appVersion: "{{ .IMAGE_TAG }}"

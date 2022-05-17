@@ -32,7 +32,7 @@ locals {
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "17.1.0"
-  depends_on      = [module.vpc, aws_route53_zone.private]
+  depends_on      = [module.vpc]
   cluster_name    = local.eks_cluster_name
   cluster_version = var.eks_cluster_version
 

@@ -11,9 +11,20 @@ resource "helm_release" "ingress_nginx" {
 
 }
 
+resource "helm_release" "nginx" {
+  name       = "nginx"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "nginx"
+  version    = var.nginx_helm_version
+  namespace  = var.ingress_nginx_namespace
+  create_namespace = true
+}
+
+
 resource "null_resource" "wait_for_ingress_nginx" {
+
   triggers = {
-    key = uuid()
+    file_sha = "${sha1(file("nginx_ingress_values.yaml"))}"
   }
 
   provisioner "local-exec" {

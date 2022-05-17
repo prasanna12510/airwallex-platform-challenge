@@ -1,0 +1,11 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "words-counter-api.fullname" . }}
+  labels:
+    {{- include "words-counter-api.labels" . | nindent 4 }}
+spec:
+  minAvailable: {{ .Values.disruptionBudget.minAvailable }}
+  selector:
+    matchLabels:
+      {{- include "words-counter-api.selectorLabels" . | nindent 6 }}

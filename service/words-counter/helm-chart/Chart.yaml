@@ -1,0 +1,6 @@
+apiVersion: v2
+name: words-counter-api
+description: A Helm chart for deploy flask based words-counter application
+type: application
+version: 0.1.0
+appVersion: "1.16.0"

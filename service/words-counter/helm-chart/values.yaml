@@ -1,0 +1,83 @@
+nameOverride: ""
+fullnameOverride: ""
+
+#set the replica count
+replicaCount: 1
+
+image:
+  repository: ghcr.io/prasanna12510/words-counter-api
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+env:
+  NGINX_URL: ac16361bc2d8f4361a425931a8b828d3-1366546228.ap-southeast-1.elb.amazonaws.com #internal k8s domain name
+
+#image pull secrets
+imagePullSecrets:
+  - name: dockerconfigjson-github-com
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+
+ingress:
+  enabled: true
+  path: /api/count
+
+# ensure the exposed docker port is exposed via service
+service:
+  type: clusterIP
+  name: http
+  port: 8080
+  targetPort: 8080
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+liveness:
+  httpGet:
+    path: /
+    port: http
+  timeoutSeconds: 30
+  periodSeconds: 10
+  failureThreshold: 3
+  initialDelaySeconds: 60
+
+readiness:
+  httpGet:
+    path: /
+    port: http
+  timeoutSeconds: 30
+  periodSeconds: 10
+  failureThreshold: 3
+  initialDelaySeconds: 60
+
+# to ensure availability
+disruptionBudget:
+  minAvailable: 1
+
+volumeMounts: []
+
+volumes: []
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

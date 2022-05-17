@@ -1,0 +1,3 @@
+urllib3
+bs4
+Flask==1.0.3

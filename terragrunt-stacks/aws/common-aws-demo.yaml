@@ -1,9 +1,10 @@
 region: ap-southeast-1
+account_id: "176609793379"
 aws_assume_role: arn:aws:iam::176609793379:role/terraform-operator
 common:
   name: aws-demo
   tags:
     environment: aws-demo
 tf_state:
-  bucket: aws-demo
+  bucket: aws-demo-tf-state
   region: ap-southeast-1

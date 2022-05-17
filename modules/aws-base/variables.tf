@@ -1,7 +1,7 @@
 variable "name" {
   type        = string
   description = "Name is used to name all resources created (as prefix)"
-  default     = "eks-titan"
+  default     = "aws-demo"
 }
 
 variable "az_count" {
@@ -45,6 +45,26 @@ variable "eks_worker_groups_launch_template" {
 variable "eks_cluster_enabled_log_types" {
   description = "A list of the desired control plane logging to enable. For more information, see Amazon EKS Control Plane Logging documentation (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html)"
   type        = list(string)
+  default     = []
+}
+
+variable "k8s_cluster_roles" {
+  description = "Kubernetes cluster roles to create"
+  type        = any
+  default     = {}
+
+}
+
+variable "k8s_cluster_role_bindings" {
+  type        = any
+  description = "Kubernetes cluster role bindings to create"
+  default     = {}
+
+}
+
+variable "k8s_role_bindings" {
+  type        = any
+  description = "Kubernetes role bindings to create"
   default     = []
 }
 

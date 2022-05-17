@@ -36,7 +36,7 @@ locals {
 }
 
 terraform {
-  source = "${get_parent_terragrunt_dir()}/../../..//modules/prometheus"
+  source = "${get_parent_terragrunt_dir()}/../../..//modules/nginx-ingress"
   extra_arguments "tf-k8s-provider-env" {
     commands = ["plan", "apply", "destroy", "import", "output", "refresh"]
     env_vars = {
