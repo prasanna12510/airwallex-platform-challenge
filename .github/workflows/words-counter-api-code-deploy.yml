@@ -7,6 +7,7 @@ on:
     paths:
       - "service/words-counter-service/**"
       - "service/helm-chart/**"
+      - "service/deploy/**"
 
 jobs:
   words-counter-api-image-build:
